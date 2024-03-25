@@ -4,6 +4,7 @@ import openai
 import logging
 import json
 import psycopg2
+import sqlite3
 import datetime
 
 logging.basicConfig(filename='some.log', encoding='utf-8', level=logging.DEBUG)

@@ -4,12 +4,12 @@
 pkgs.mkShellNoCC {
   packages = with pkgs; [
     (python3.withPackages (ps: [
-	ps.numpy
-	ps.pandas
+	ps.sqlite3
 	ps.openai
 	ps.psycopg2
 	]))
     postgresql
+    sqlite
   ];
 
   PGHOST = "/home/jdd/jems";
@@ -24,7 +24,7 @@ pkgs.mkShellNoCC {
 
     # create a database
 #    createdb cooldb
-    echo "hello, nix-shell importing all packages from 'nix-unstable' with python, numpy, pandas, psycopg2, openai and postgresql has begun"
+    echo "hello, nix-shell importing all packages from 'nix-unstable' with python, sqlite3, psycopg2, openai, postgresql and sqlite has begun"
     echo "run the following commands to do the stuff you usually want to do:"
     echo "initdb -D .tmp/cooldb"
     echo "pg_ctl -D .tmp/cooldb -l logfile -o \"--unix_socket_directories='$PWD'\" start"
