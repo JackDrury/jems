@@ -4,7 +4,6 @@
 pkgs.mkShellNoCC {
   packages = with pkgs; [
     (python3.withPackages (ps: [
-	ps.sqlite3
 	ps.openai
 	ps.psycopg2
 	]))
