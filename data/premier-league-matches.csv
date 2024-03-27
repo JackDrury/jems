@@ -1,4 +1,4 @@
-Season_End_Year,Wk,Date,Home,HomeGoals,AwayGoals,Away,FTR
+season_end_year,season_week,match_date,home_team_name,home_team_goals,away_team_goals,away_team_name,full_time_result
 1993,1,1992-08-15,Coventry City,2,1,Middlesbrough,H
 1993,1,1992-08-15,Leeds United,2,1,Wimbledon,H
 1993,1,1992-08-15,Sheffield Utd,2,1,Manchester Utd,H

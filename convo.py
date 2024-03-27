@@ -3,7 +3,7 @@ import os
 import openai
 import logging
 import json
-import psycopg2
+import sqlite3
 import datetime
 
 logging.basicConfig(filename='some.log', encoding='utf-8', level=logging.DEBUG)
@@ -29,22 +29,12 @@ CREATE TYPE game_result AS
     ENUM ('A', 'H', 'D'); 
 'A' means the away team won, 'H' means the home team won and 'D' means the result was a draw 
 
-CREATE TABLE premier_league_matches (
-season_end_year smallint,
-season_week smallint, 
-match_date date, 
-home_team_name team,
-home_team_goals smallint,
-away_team_name team,
-away_team_goals smallint,
-full_time_result game_result);
+CREATE TABLE premier_league_matches (season_end_year SMALLINT, season_week SMALLINT, 
+match_date DATE, home_team_name team, 
+home_team_goals SMALLINT, away_team_name team, 
+away_team_goals SMALLINT, full_time_result game_result);
 """
 logging.info(f'table_metadata:{table_metadata}')
-
-#COPY matches(season_end_year, season_week, match_date, home_team_name, home_team_goals, away_team_goals, away_team_name, full_time_result)
-#FROM '/home/jdd/jems/data/premier-league-matches.csv'
-#DELIMITER ','
-#CSV HEADER;
 
 #currently just handles two layers of nesting because I am dumb and lazy
 def answer_dates_to_string(ans):
@@ -60,44 +50,34 @@ def answer_dates_to_string(ans):
     return result
 
 
-def ps_query(target_query):
-    """Execute query on postgresql db using psycopg2"""
-    conn = psycopg2.connect(
-                database="cooldb",#"db_name",
-                host="/home/jdd/jems",
-                user="jdd",
-#                password="db_pass",
-                port="5432")
-    if target_query[-1] != ";":
-        target_query += ";"
-    print(target_query)
-    logging.info(f'target_query:{target_query}')
-    cursor = conn.cursor()
-    cursor.execute(target_query)
+def db_query(target_query):
+    """Execute query on sqlite db using sqlite3"""
 
-    answer = cursor.fetchall()
-#(1996, 12, datetime.date(1995, 11, 4), 'West Ham', 1, 'Aston Villa', 4, 'A'),
+    with sqlite3.connect('cooldb.db') as conn:
 
-#    answer = list(map(lambda x : (x[0],x[1],x[2].isoformat(),x[3],x[4],x[5],x[6],x[7]),answer))
-# This is dumb, you will need to handle more date stuff
+        if target_query[-1] != ";":
+            target_query += ";"
+        print(target_query)
+        logging.info(f'target_query:{target_query}')
 
-    answer = answer_dates_to_string(answer)
+        cursor = conn.cursor() 
 
-    answer = json.dumps(answer)
+        cursor.execute(target_query)
 
-    cursor.close()
-    conn.close()
+        answer = cursor.fetchall()
+
+        answer = answer_dates_to_string(answer)
+
+        answer = json.dumps(answer)
+
+        cursor.close()
 
     print("=============================")
-    print("here is the psql answer:")
+    print("here is the sqlite answer:")
     print(answer)
     print("=============================")
     logging.info(f'query_result:{answer}')
     return answer
-
-#ps_query("SELECT * FROM matches WHERE season_week = 12 AND away_team_goals > 3;")
-#ps_query("SELECT SUM(home_team_goals) as total_home_goals FROM matches WHERE home_team_name = 'Arsenal';")
-
 
 
 def run_conversation(query):
@@ -113,7 +93,7 @@ def run_conversation(query):
         {
             "type": "function",
             "function": {
-                "name": "ps_query",
+                "name": "db_query",
                 "description": "Execute the given SQL query and return the results",
                 "parameters": {
                     "type": "object",
@@ -151,7 +131,7 @@ def run_conversation(query):
         # Note: the JSON response may not always be valid; be sure to handle errors
 
         available_functions = {
-            "ps_query": ps_query,
+            "db_query": db_query,
         }  # only one function in this example, but you can have multiple
 
         messages.append(response_message)
@@ -188,9 +168,6 @@ def run_conversation(query):
     else:
         print("apparently GPT didn't want to call a function....")
 
-#run_conversation("How many home goals have arsenal scored?")
-#run_conversation("How many home goals have nottingham scored?")
-
 
 
 if len(sys.argv) < 2:
@@ -200,6 +177,3 @@ elif len(sys.argv) > 2:
 else:
     assert type(sys.argv[1]) == str
     run_conversation(sys.argv[1])
-
-#    ps_query("SELECT * FROM matches WHERE season_week = 12 AND away_team_goals > 3;")
-#    ps_query("SELECT SUM(home_team_goals) as total_home_goals FROM matches WHERE home_team_name = 'Arsenal';")

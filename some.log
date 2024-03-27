@@ -1,0 +1,123 @@
+DEBUG:httpx:load_ssl_context verify=True cert=None trust_env=True http2=False
+DEBUG:httpx:load_verify_locations cafile='/nix/store/vzgbjcz1m1aqm8zb489f6lr2b3c6c450-python3-3.11.8-env/lib/python3.11/site-packages/certifi/cacert.pem'
+INFO:root:table_metadata:
+CREATE TYPE team AS ENUM ('Chelsea', 'Middlesbrough', 'Bournemouth', 'Burnley', 'Everton',
+'Bradford City', 'West Ham', 'Nottingham Forest', 'Hull City', 'Swansea City', 'West Brom',
+'Huddersfield', 'Coventry City', 'Manchester City', 'Manchester Utd', 'Blackpool', 'Reading',
+'Fulham', 'Brentford', 'Portsmouth', 'Leicester City', 'Wimbledon',
+'Sheffield Weds', 'Ipswich Town', 'Barnsley', 'Sunderland', 'Blackburn', 'Brighton',
+'Charlton Ath', 'QPR', 'Norwich City', 'Sheffield Utd', 'Wolves', 'Tottenham', 'Aston Villa',
+'Derby County', 'Oldham Athletic', 'Birmingham City', 'Stoke City', 'Wigan Athletic', 'Cardiff City',
+'Newcastle Utd', 'Liverpool', 'Arsenal', 'Crystal Palace', 'Leeds United', 'Watford',
+'Southampton', 'Bolton', 'Swindon Town');
+
+CREATE TYPE game_result AS 
+    ENUM ('A', 'H', 'D'); 
+'A' means the away team won, 'H' means the home team won and 'D' means the result was a draw 
+
+CREATE TABLE premier_league_matches (season_end_year SMALLINT, season_week SMALLINT, 
+match_date DATE, home_team_name VARCHAR(20), 
+home_team_goals SMALLINT, away_team_name VARCHAR(20), 
+away_team_goals SMALLINT, full_time_result CHARACTER(1));
+
+DEBUG:httpx:load_ssl_context verify=True cert=None trust_env=True http2=False
+DEBUG:httpx:load_verify_locations cafile='/nix/store/vzgbjcz1m1aqm8zb489f6lr2b3c6c450-python3-3.11.8-env/lib/python3.11/site-packages/certifi/cacert.pem'
+INFO:root:table_metadata:
+CREATE TYPE team AS ENUM ('Chelsea', 'Middlesbrough', 'Bournemouth', 'Burnley', 'Everton',
+'Bradford City', 'West Ham', 'Nottingham Forest', 'Hull City', 'Swansea City', 'West Brom',
+'Huddersfield', 'Coventry City', 'Manchester City', 'Manchester Utd', 'Blackpool', 'Reading',
+'Fulham', 'Brentford', 'Portsmouth', 'Leicester City', 'Wimbledon',
+'Sheffield Weds', 'Ipswich Town', 'Barnsley', 'Sunderland', 'Blackburn', 'Brighton',
+'Charlton Ath', 'QPR', 'Norwich City', 'Sheffield Utd', 'Wolves', 'Tottenham', 'Aston Villa',
+'Derby County', 'Oldham Athletic', 'Birmingham City', 'Stoke City', 'Wigan Athletic', 'Cardiff City',
+'Newcastle Utd', 'Liverpool', 'Arsenal', 'Crystal Palace', 'Leeds United', 'Watford',
+'Southampton', 'Bolton', 'Swindon Town');
+
+CREATE TYPE game_result AS 
+    ENUM ('A', 'H', 'D'); 
+'A' means the away team won, 'H' means the home team won and 'D' means the result was a draw 
+
+CREATE TABLE premier_league_matches (season_end_year SMALLINT, season_week SMALLINT, 
+match_date DATE, home_team_name VARCHAR(20), 
+home_team_goals SMALLINT, away_team_name VARCHAR(20), 
+away_team_goals SMALLINT, full_time_result CHARACTER(1));
+
+DEBUG:openai._base_client:Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'json_data': {'messages': [{'role': 'user', 'content': "\n        Here is the context for how the tables are structured:\n        \nCREATE TYPE team AS ENUM ('Chelsea', 'Middlesbrough', 'Bournemouth', 'Burnley', 'Everton',\n'Bradford City', 'West Ham', 'Nottingham Forest', 'Hull City', 'Swansea City', 'West Brom',\n'Huddersfield', 'Coventry City', 'Manchester City', 'Manchester Utd', 'Blackpool', 'Reading',\n'Fulham', 'Brentford', 'Portsmouth', 'Leicester City', 'Wimbledon',\n'Sheffield Weds', 'Ipswich Town', 'Barnsley', 'Sunderland', 'Blackburn', 'Brighton',\n'Charlton Ath', 'QPR', 'Norwich City', 'Sheffield Utd', 'Wolves', 'Tottenham', 'Aston Villa',\n'Derby County', 'Oldham Athletic', 'Birmingham City', 'Stoke City', 'Wigan Athletic', 'Cardiff City',\n'Newcastle Utd', 'Liverpool', 'Arsenal', 'Crystal Palace', 'Leeds United', 'Watford',\n'Southampton', 'Bolton', 'Swindon Town');\n\nCREATE TYPE game_result AS \n    ENUM ('A', 'H', 'D'); \n'A' means the away team won, 'H' means the home team won and 'D' means the result was a draw \n\nCREATE TABLE premier_league_matches (season_end_year SMALLINT, season_week SMALLINT, \nmatch_date DATE, home_team_name VARCHAR(20), \nhome_team_goals SMALLINT, away_team_name VARCHAR(20), \naway_team_goals SMALLINT, full_time_result CHARACTER(1));\n\n        Now please convert the query below into working SQL and execute it:\n        How many home goals have arsenal scored?\n    "}], 'model': 'gpt-3.5-turbo-0125', 'tool_choice': 'auto', 'tools': [{'type': 'function', 'function': {'name': 'ps_query', 'description': 'Execute the given SQL query and return the results', 'parameters': {'type': 'object', 'properties': {'target_query': {'type': 'string', 'description': 'The SQL query to execute'}}, 'required': ['target_query']}}}]}}
+DEBUG:httpcore.connection:connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+DEBUG:httpcore.connection:connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7f9bf4126590>
+DEBUG:httpcore.connection:start_tls.started ssl_context=<ssl.SSLContext object at 0x7f9bf41043b0> server_hostname='api.openai.com' timeout=5.0
+DEBUG:httpcore.connection:start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7f9bf4125150>
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 27 Mar 2024 23:39:51 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-allow-origin', b'*'), (b'Cache-Control', b'no-cache, must-revalidate'), (b'openai-model', b'gpt-3.5-turbo-0125'), (b'openai-organization', b'user-byyy0bwki2u3so5awe2w5tay'), (b'openai-processing-ms', b'1051'), (b'openai-version', b'2020-10-01'), (b'strict-transport-security', b'max-age=15724800; includeSubDomains'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'60000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'59644'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'356ms'), (b'x-request-id', b'req_e39e3baee60fd89a329766d1d3d21ec5'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=QxzQxQ_3GKwgHYKWvJN2VZ7atC4WvlooxDLuIIh5B9k-1711582791-1.0.1.1-.NtRfEddYdbMJ4feOBRYSbtOiHoGjHWshbhtla_ixu9luWYnockhWb6urSYsgP116Hsmeb3Unv4LRHKjvvq8JQ; path=/; expires=Thu, 28-Mar-24 00:09:51 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Set-Cookie', b'_cfuvid=1CdTWh7LGXWlPaLqCr8HH.uZqRac_DpEkYkACNOlp9w-1711582791086-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Server', b'cloudflare'), (b'CF-RAY', b'86b338d39f6daae4-SYD'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:openai._base_client:HTTP Request: POST https://api.openai.com/v1/chat/completions "200 OK"
+INFO:root:gpt_response1:ChatCompletionMessage(content=None, role='assistant', function_call=None, tool_calls=[ChatCompletionMessageToolCall(id='call_AdGa1lvxcYIuqMQGXKSXQcpG', function=Function(arguments='{"target_query":"SELECT SUM(home_team_goals) FROM premier_league_matches WHERE home_team_name = \'Arsenal\' AND full_time_result != \'D\';"}', name='ps_query'), type='function')])
+INFO:root:target_query:SELECT SUM(home_team_goals) FROM premier_league_matches WHERE home_team_name = 'Arsenal' AND full_time_result != 'D';
+DEBUG:httpcore.connection:close.started
+DEBUG:httpcore.connection:close.complete
+DEBUG:httpx:load_ssl_context verify=True cert=None trust_env=True http2=False
+DEBUG:httpx:load_verify_locations cafile='/nix/store/vzgbjcz1m1aqm8zb489f6lr2b3c6c450-python3-3.11.8-env/lib/python3.11/site-packages/certifi/cacert.pem'
+INFO:root:table_metadata:
+CREATE TYPE team AS ENUM ('Chelsea', 'Middlesbrough', 'Bournemouth', 'Burnley', 'Everton',
+'Bradford City', 'West Ham', 'Nottingham Forest', 'Hull City', 'Swansea City', 'West Brom',
+'Huddersfield', 'Coventry City', 'Manchester City', 'Manchester Utd', 'Blackpool', 'Reading',
+'Fulham', 'Brentford', 'Portsmouth', 'Leicester City', 'Wimbledon',
+'Sheffield Weds', 'Ipswich Town', 'Barnsley', 'Sunderland', 'Blackburn', 'Brighton',
+'Charlton Ath', 'QPR', 'Norwich City', 'Sheffield Utd', 'Wolves', 'Tottenham', 'Aston Villa',
+'Derby County', 'Oldham Athletic', 'Birmingham City', 'Stoke City', 'Wigan Athletic', 'Cardiff City',
+'Newcastle Utd', 'Liverpool', 'Arsenal', 'Crystal Palace', 'Leeds United', 'Watford',
+'Southampton', 'Bolton', 'Swindon Town');
+
+CREATE TYPE game_result AS 
+    ENUM ('A', 'H', 'D'); 
+'A' means the away team won, 'H' means the home team won and 'D' means the result was a draw 
+
+CREATE TABLE premier_league_matches (season_end_year SMALLINT, season_week SMALLINT, 
+match_date DATE, home_team_name team, 
+home_team_goals SMALLINT, away_team_name team, 
+away_team_goals SMALLINT, full_time_result game_result);
+
+DEBUG:openai._base_client:Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'json_data': {'messages': [{'role': 'user', 'content': "\n        Here is the context for how the tables are structured:\n        \nCREATE TYPE team AS ENUM ('Chelsea', 'Middlesbrough', 'Bournemouth', 'Burnley', 'Everton',\n'Bradford City', 'West Ham', 'Nottingham Forest', 'Hull City', 'Swansea City', 'West Brom',\n'Huddersfield', 'Coventry City', 'Manchester City', 'Manchester Utd', 'Blackpool', 'Reading',\n'Fulham', 'Brentford', 'Portsmouth', 'Leicester City', 'Wimbledon',\n'Sheffield Weds', 'Ipswich Town', 'Barnsley', 'Sunderland', 'Blackburn', 'Brighton',\n'Charlton Ath', 'QPR', 'Norwich City', 'Sheffield Utd', 'Wolves', 'Tottenham', 'Aston Villa',\n'Derby County', 'Oldham Athletic', 'Birmingham City', 'Stoke City', 'Wigan Athletic', 'Cardiff City',\n'Newcastle Utd', 'Liverpool', 'Arsenal', 'Crystal Palace', 'Leeds United', 'Watford',\n'Southampton', 'Bolton', 'Swindon Town');\n\nCREATE TYPE game_result AS \n    ENUM ('A', 'H', 'D'); \n'A' means the away team won, 'H' means the home team won and 'D' means the result was a draw \n\nCREATE TABLE premier_league_matches (season_end_year SMALLINT, season_week SMALLINT, \nmatch_date DATE, home_team_name team, \nhome_team_goals SMALLINT, away_team_name team, \naway_team_goals SMALLINT, full_time_result game_result);\n\n        Now please convert the query below into working SQL and execute it:\n        How many home goals have arsenal scored?\n    "}], 'model': 'gpt-3.5-turbo-0125', 'tool_choice': 'auto', 'tools': [{'type': 'function', 'function': {'name': 'ps_query', 'description': 'Execute the given SQL query and return the results', 'parameters': {'type': 'object', 'properties': {'target_query': {'type': 'string', 'description': 'The SQL query to execute'}}, 'required': ['target_query']}}}]}}
+DEBUG:httpcore.connection:connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+DEBUG:httpcore.connection:connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7f7bbc1ce490>
+DEBUG:httpcore.connection:start_tls.started ssl_context=<ssl.SSLContext object at 0x7f7bbc1a4440> server_hostname='api.openai.com' timeout=5.0
+DEBUG:httpcore.connection:start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7f7bbc1ccf90>
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 27 Mar 2024 23:44:19 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-allow-origin', b'*'), (b'Cache-Control', b'no-cache, must-revalidate'), (b'openai-model', b'gpt-3.5-turbo-0125'), (b'openai-organization', b'user-byyy0bwki2u3so5awe2w5tay'), (b'openai-processing-ms', b'796'), (b'openai-version', b'2020-10-01'), (b'strict-transport-security', b'max-age=15724800; includeSubDomains'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'60000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'59648'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'352ms'), (b'x-request-id', b'req_878b7090f3ab7763f71bf4bf9e595733'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=38Xg2OwcpPeoL2r3dZ.1bXZOC1Zp3ba0OcYE5ZBnYXs-1711583059-1.0.1.1-qG3wl1C4Wg2Q2d7gsPLQo8yIThHwY3hjtRcippXVCyCwUhXDe.5LYgbxS55.VM4hTuSDYxJJBi6A2cHDAkj4Ew; path=/; expires=Thu, 28-Mar-24 00:14:19 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Set-Cookie', b'_cfuvid=husgd5mk8PErxPE75dMw0bPHOscTGCXOLobpzij80iw-1711583059644-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Server', b'cloudflare'), (b'CF-RAY', b'86b33f63acc5555d-SYD'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:openai._base_client:HTTP Request: POST https://api.openai.com/v1/chat/completions "200 OK"
+INFO:root:gpt_response1:ChatCompletionMessage(content=None, role='assistant', function_call=None, tool_calls=[ChatCompletionMessageToolCall(id='call_sUftrUOldSGkRYfAq8X67ObP', function=Function(arguments='{"target_query":"SELECT SUM(home_team_goals) AS arsenal_home_goals FROM premier_league_matches WHERE home_team_name = \'Arsenal\';"}', name='ps_query'), type='function')])
+INFO:root:target_query:SELECT SUM(home_team_goals) AS arsenal_home_goals FROM premier_league_matches WHERE home_team_name = 'Arsenal';
+INFO:root:query_result:[[1207]]
+DEBUG:openai._base_client:Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'json_data': {'messages': [{'role': 'user', 'content': "\n        Here is the context for how the tables are structured:\n        \nCREATE TYPE team AS ENUM ('Chelsea', 'Middlesbrough', 'Bournemouth', 'Burnley', 'Everton',\n'Bradford City', 'West Ham', 'Nottingham Forest', 'Hull City', 'Swansea City', 'West Brom',\n'Huddersfield', 'Coventry City', 'Manchester City', 'Manchester Utd', 'Blackpool', 'Reading',\n'Fulham', 'Brentford', 'Portsmouth', 'Leicester City', 'Wimbledon',\n'Sheffield Weds', 'Ipswich Town', 'Barnsley', 'Sunderland', 'Blackburn', 'Brighton',\n'Charlton Ath', 'QPR', 'Norwich City', 'Sheffield Utd', 'Wolves', 'Tottenham', 'Aston Villa',\n'Derby County', 'Oldham Athletic', 'Birmingham City', 'Stoke City', 'Wigan Athletic', 'Cardiff City',\n'Newcastle Utd', 'Liverpool', 'Arsenal', 'Crystal Palace', 'Leeds United', 'Watford',\n'Southampton', 'Bolton', 'Swindon Town');\n\nCREATE TYPE game_result AS \n    ENUM ('A', 'H', 'D'); \n'A' means the away team won, 'H' means the home team won and 'D' means the result was a draw \n\nCREATE TABLE premier_league_matches (season_end_year SMALLINT, season_week SMALLINT, \nmatch_date DATE, home_team_name team, \nhome_team_goals SMALLINT, away_team_name team, \naway_team_goals SMALLINT, full_time_result game_result);\n\n        Now please convert the query below into working SQL and execute it:\n        How many home goals have arsenal scored?\n    "}, {'content': None, 'role': 'assistant', 'tool_calls': [{'id': 'call_sUftrUOldSGkRYfAq8X67ObP', 'function': {'arguments': '{"target_query":"SELECT SUM(home_team_goals) AS arsenal_home_goals FROM premier_league_matches WHERE home_team_name = \'Arsenal\';"}', 'name': 'ps_query'}, 'type': 'function'}]}, {'tool_call_id': 'call_sUftrUOldSGkRYfAq8X67ObP', 'role': 'tool', 'name': 'ps_query', 'content': '[[1207]]'}], 'model': 'gpt-3.5-turbo-0125'}}
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 27 Mar 2024 23:44:21 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-allow-origin', b'*'), (b'Cache-Control', b'no-cache, must-revalidate'), (b'openai-model', b'gpt-3.5-turbo-0125'), (b'openai-organization', b'user-byyy0bwki2u3so5awe2w5tay'), (b'openai-processing-ms', b'1666'), (b'openai-version', b'2020-10-01'), (b'strict-transport-security', b'max-age=15724800; includeSubDomains'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'60000'), (b'x-ratelimit-remaining-requests', b'9998'), (b'x-ratelimit-remaining-tokens', b'59644'), (b'x-ratelimit-reset-requests', b'16.076s'), (b'x-ratelimit-reset-tokens', b'356ms'), (b'x-request-id', b'req_5bed31865ebc5e2c35ee3a3d8f7cb8c0'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'86b33f6b3a6e555d-SYD'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:openai._base_client:HTTP Request: POST https://api.openai.com/v1/chat/completions "200 OK"
+INFO:root:gpt_response2:ChatCompletion(id='chatcmpl-97XEKx79Yz73s0klNbZU4XDiDLEf8', choices=[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Arsenal has scored a total of 1207 home goals in the Premier League matches.', role='assistant', function_call=None, tool_calls=None))], created=1711583060, model='gpt-3.5-turbo-0125', object='chat.completion', system_fingerprint='fp_3bc1b5746c', usage=CompletionUsage(completion_tokens=18, prompt_tokens=434, total_tokens=452))
+DEBUG:httpcore.connection:close.started
+DEBUG:httpcore.connection:close.complete
