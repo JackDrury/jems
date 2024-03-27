@@ -5,7 +5,6 @@ pkgs.mkShellNoCC {
   packages = with pkgs; [
     (python3.withPackages (ps: [
 	    ps.openai
-	    ps.sqlite3
 	  ]))
     sqlite
   ];
@@ -13,7 +12,7 @@ pkgs.mkShellNoCC {
   PGHOST = "/home/jdd/jems";
 
   shellHook = ''
-    echo "hello, nix-shell importing all packages from 'nix-unstable' with python, sqlite3, openai and sqlite has begun"
+    echo "hello, nix-shell importing all packages from 'nix-unstable' with python, openai and sqlite has begun"
     echo "run the following commands to do the stuff you usually want to do:"
     echo "initdb -D .tmp/cooldb"
     echo "pg_ctl -D .tmp/cooldb -l logfile -o \"--unix_socket_directories='$PWD'\" start"
