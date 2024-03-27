@@ -3,7 +3,6 @@ import os
 import openai
 import logging
 import json
-import psycopg2
 import sqlite3
 import datetime
 
@@ -30,15 +29,10 @@ CREATE TYPE game_result AS
     ENUM ('A', 'H', 'D'); 
 'A' means the away team won, 'H' means the home team won and 'D' means the result was a draw 
 
-CREATE TABLE premier_league_matches (
-season_end_year smallint,
-season_week smallint, 
-match_date date, 
-home_team_name team,
-home_team_goals smallint,
-away_team_name team,
-away_team_goals smallint,
-full_time_result game_result);
+CREATE TABLE premier_league_matches (season_end_year SMALLINT, season_week SMALLINT, 
+match_date DATE, home_team_name VARCHAR(20), 
+home_team_goals SMALLINT, away_team_name VARCHAR(20), 
+away_team_goals SMALLINT, full_time_result CHARACTER(1));
 """
 logging.info(f'table_metadata:{table_metadata}')
 
